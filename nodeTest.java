@@ -45,18 +45,58 @@ public class nodeTest {
 
     // FUNCTION TO POP TOKEN VALUE FROM 4 SLOTS INDEPENDENTLY
 
-    public void popT1() {
-        this.t1 = null;
+    public void pop (tokenTest t) {
+        if (this.t1 == t) {
+            if (this.t2 != null) {
+                this.t1 = this.t2;
+                if (this.t3 != null) {
+                    this.t2 = this.t3;
+                    if (this.t4 != null) {
+                        this.t3 = this.t4;
+                        this.t4 = null;
+                    }
+                    else {
+                        this.t3 = null;
+                    }
+                }
+                else {
+                    this.t2 = null;
+                }
+            }
+            else {
+                this.t1 = null;
+            }
+        }
+        else if (this.t2 == t) {
+            if (this.t3 != null) {
+                this.t2 = this.t3;
+                if (this.t4 != null) {
+                    this.t3 = this.t4;
+                    this.t4 = null;
+                }
+                else {
+                    this.t3 = null;
+                }
+            }
+            else {
+                this.t2 = null;
+            }
+        }
+        else if (this.t3 == t) {
+            if (this.t4 != null) {
+                this.t3 = this.t4;
+                this.t4 = null;
+            }
+            else {
+                this.t3 = null;
+            }
+        }
+        else {
+            this.t4 = null;
+        }
     }
-    public void popT2() {
-        this.t2 = null;
-    }
-    public void popT3() {
-        this.t3 = null;
-    }
-    public void popT4() {
-        this.t4 = null;
-    }
+
+    //UTILITY FUNCTIONS
 
     public void resetToken() {
         nodeStack.in(t1);

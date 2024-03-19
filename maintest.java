@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 class maintest {
 
     
@@ -73,27 +75,23 @@ class maintest {
     private static void moveToken(tokenTest t, nodeTest node) {
         if (node.t1 == null) {
             node.t1 = t;
-            t.currNodeTokenSpace = null;
-            node.t1.currentNode = node;
-            node.t1.currNodeTokenSpace = node.t1;
+            t.currentNode.pop(t);
+            t.currentNode = node;
         }
         else if (node.t2 == null) {
             node.t2 = t;
-            t.currNodeTokenSpace = null;
-            node.t2.currentNode = node;
-            node.t2.currNodeTokenSpace = node.t2;
+            t.currentNode.pop(t);
+            t.currentNode = node;
         }
         else if (node.t3 == null) {
             node.t3 = t;
-            t.currNodeTokenSpace = null;
-            node.t3.currentNode = node;
-            node.t3.currNodeTokenSpace = node.t3;
+            t.currentNode.pop(t);
+            t.currentNode = node;
         }
         else {
             node.t4 = t;
-            t.currNodeTokenSpace = null;
-            node.t4.currentNode = node;
-            node.t4.currNodeTokenSpace = node.t4;
+            t.currentNode.pop(t);
+            t.currentNode = node;
         }
     }
     
@@ -132,7 +130,8 @@ class maintest {
 
     private static void tokenToFinal(StackTest finalHouse, tokenTest t) {
         finalHouse.in(t);
-        t.currNodeTokenSpace
+        t.currentNode.pop(t);
+        t.currentNode = null; 
     }
 
     
@@ -175,7 +174,18 @@ class maintest {
 
     }
     
-    
+    //FUNCTION TO SET PLAYERS DATA ARRAY
+
+                // {{"red", "n", "-1", "-1", "-1", "-1"}, 
+                // {"yellow", "n", "-1", "-1", "-1", "-1"}, 
+                // {"blue", "n", "-1", "-1", "-1", "-1"}, 
+                // {"green", "n", "-1", "-1", "-1", "-1"}}
+
+    private static void setPlayers(int players, String [][] playersData) {
+        for (int i = 0; i < players; i++) {
+            playersData[i][1] = "p";
+        }
+    }
     
     
     //////////////////////////////////////////////  MAIN  //////////////////////////////////////////////////
@@ -185,7 +195,11 @@ class maintest {
     public static void main(String[] args) {
         // creating Map variable
         MapTest2 map = Map();
+
+        //Initializing the input reader object
         
+        Scanner inp = new Scanner(System.in);
+
         // creating pointer variables to Gate House Stacks
 
         StackTest RedHouse = map.InitRedHouse;
@@ -208,42 +222,55 @@ class maintest {
                                 {"green", "n", "-1", "-1", "-1", "-1"}};
 
 
-        // RED HOUSE
+        // Selecting no. of players
+
+        System.out.println("Enter the no. of players: ");
+        int total_players =  inp.nextInt();
+        
+        setPlayers(total_players, players);
 
 
-        if (players[1][2] == "y"){
-            for(int i = 0; i < 4; i++) {
+        // SETTING TOKENS FOR ADDED PLAYERS
+
+        for(int j = 0; j < total_players; j++) {
+
+            // RED HOUSE
+            
+            
+            if (j == 0){
+                for(int i = 0; i < 4; i++) {
                 tokenTest t = new tokenTest('r', players[1][1], RedHouse);
                 RedHouse.in(t);
             }
-        }
-
-        // YELLOW HOUSE
-
-        if (players[2][2] == "y"){
-            for(int i = 0; i < 4; i++) {
-                tokenTest t = new tokenTest('y', players[2][1], YellowHouse);
-                YellowHouse.in(t);
             }
-        }
-        // BLUE HOUSE
+
+            // YELLOW HOUSE
+
+            if (j == 1){
+                for(int i = 0; i < 4; i++) {
+                    tokenTest t = new tokenTest('y', players[2][1], YellowHouse);
+                    YellowHouse.in(t);
+                }
+            }
+            // BLUE HOUSE
+            
+            if (j == 2){
+                for(int i = 0; i < 4; i++) {
+                    tokenTest t = new tokenTest('b', players[3][1], BlueHouse);
+                    BlueHouse.in(t);
+                }
+            }
+            
+            // GREEN HOUSE
+            
+            if (j == 3){
+                for(int i = 0; i < 4; i++) {
+                    tokenTest t = new tokenTest('g', players[4][1], GreenHouse);
+                    GreenHouse.in(t);
+                }
+            }
         
-        if (players[3][2] == "y"){
-            for(int i = 0; i < 4; i++) {
-                tokenTest t = new tokenTest('b', players[3][1], BlueHouse);
-                BlueHouse.in(t);
-            }
         }
-        
-        // GREEN HOUSE
-
-        if (players[4][2] == "y"){
-            for(int i = 0; i < 4; i++) {
-                tokenTest t = new tokenTest('g', players[4][1], GreenHouse);
-                GreenHouse.in(t);
-            }
-        }
-
 
 
     }

@@ -3,7 +3,6 @@ public class tokenTest {
     String id;
     StackTest house;
     nodeTest currentNode = null;
-
     
     tokenTest() {}
 
